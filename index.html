@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Артем Балашов | Model Portfolio & Composite Card</title>
+  <title>Артём Балашов | Model Portfolio & Composite Card</title>
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Артем Балашов | Model & Event Talent">
+  <meta property="og:title" content="Артём Балашов | Model & Event Talent">
   <meta property="og:description" content="Портфолио, композит-карта, параметры и прямое бронирование.">
   <meta property="og:image" content="IMG_8513.JPG">
 
@@ -127,7 +127,6 @@
         break-inside: avoid !important;
       }
 
-      /* Принудительная 12-колоночная раскладка при печати на лист */
       #comp-grid-box {
         display: grid !important;
         grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
@@ -181,13 +180,13 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Навигация: аккуратный короткий бейдж OSCAR MODELS -->
-  <nav class="fixed top-0 left-0 w-full z-40 bg-black/85 backdrop-blur-md border-b border-white/10 px-4 md:px-6 py-3.5 flex justify-between items-center text-xs tracking-widest uppercase">
-    <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2">
-      <span>АРТЕМ БАЛАШОВ</span>
-      <span class="text-[9px] md:text-[10px] bg-white/10 text-neutral-300 px-1.5 py-0.5 rounded tracking-normal">OSCAR MODELS</span>
+  <!-- Выверенная шапка: идеальная центровка на мобильных телефонах -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-black/85 backdrop-blur-md border-b border-white/10 px-4 md:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 uppercase tracking-widest text-xs">
+    <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2 justify-center">
+      <span>АРТЁМ БАЛАШОВ</span>
+      <span class="text-[9px] md:text-[10px] bg-white/10 text-neutral-300 px-2 py-0.5 rounded tracking-normal">OSCAR MODELS</span>
     </a>
-    <div class="flex gap-4 md:gap-6 text-[11px] md:text-xs">
+    <div class="flex items-center justify-center gap-5 md:gap-6 text-[11px] md:text-xs">
       <a href="#book" class="hover:text-neutral-400 transition hidden sm:inline">Portfolio</a>
       <a href="#video" class="hover:text-neutral-400 transition">Video</a>
       <a href="#compcard" class="hover:text-neutral-400 transition">Comp Card</a>
@@ -196,7 +195,7 @@
   </nav>
 
   <!-- Hero-секция -->
-  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-28 pb-16 bg-[#0b0b0b]">
+  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-32 pb-16 bg-[#0b0b0b]">
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       
       <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
@@ -207,7 +206,7 @@
         </div>
 
         <h1 class="serif-title text-5xl sm:text-6xl md:text-8xl font-light tracking-wide leading-none mb-6">
-          АРТЕМ БАЛАШОВ
+          АРТЁМ БАЛАШОВ
         </h1>
 
         <p class="text-sm md:text-base text-neutral-300 max-w-lg mb-8 font-light leading-relaxed">
@@ -235,7 +234,7 @@
     </div>
   </header>
 
-  <!-- Параметры (Measurements) -->
+  <!-- Параметры -->
   <section class="py-16 px-6 md:px-16 border-b border-white/10 bg-[#111]">
     <div class="max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
@@ -277,7 +276,7 @@
     </div>
   </section>
 
-  <!-- Галерея (Book & Events) -->
+  <!-- Галерея -->
   <section id="book" class="py-24 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
@@ -372,7 +371,7 @@
     </div>
   </section>
 
-  <!-- Видеовизитка -->
+  <!-- Видеовизитка: добавлены playsinline, preload="metadata" и прямая ссылка -->
   <section id="video" class="py-24 px-6 md:px-16 border-t border-b border-white/10 bg-[#0d0d0d]">
     <div class="max-w-4xl mx-auto text-center">
       <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Introduction</span>
@@ -382,15 +381,15 @@
       </p>
 
       <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black aspect-video max-w-3xl mx-auto shadow-2xl">
-        <video controls preload="none" poster="IMG_8513.JPG" class="w-full h-full object-cover">
-          <source src="5946897207271934775.mp4" type="video/mp4">
+        <video controls playsinline webkit-playsinline preload="metadata" poster="IMG_8513.JPG" class="w-full h-full object-cover">
+          <source src="./5946897207271934775.mp4" type="video/mp4">
           Ваш браузер не поддерживает встроенное видео.
         </video>
       </div>
     </div>
   </section>
 
-  <!-- Composite Card (Полная мобильная адаптация) -->
+  <!-- Composite Card -->
   <section id="compcard" class="py-24 px-4 md:px-16 bg-[#111]">
     <div class="max-w-5xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
@@ -403,13 +402,11 @@
         </button>
       </div>
 
-      <!-- Сама карточка -->
       <div id="comp-card-print" class="bg-[#181818] border border-white/15 p-5 md:p-8 rounded-lg shadow-2xl text-neutral-200">
         
-        <!-- Шапка -->
         <div class="flex justify-between items-end border-b border-white/15 pb-3 mb-4">
           <div>
-            <h3 class="serif-title text-2xl md:text-4xl font-normal tracking-wider text-white">АРТЕМ БАЛАШОВ</h3>
+            <h3 class="serif-title text-2xl md:text-4xl font-normal tracking-wider text-white">АРТЁМ БАЛАШОВ</h3>
             <span class="text-[10px] md:text-xs tracking-[0.2em] uppercase text-neutral-400">Model & Event Talent</span>
           </div>
           <div class="text-right">
@@ -419,18 +416,14 @@
           </div>
         </div>
 
-        <!-- Адаптивная сетка: на мобилках в 1 колонку, на планшетах/ПК в 12 колонок -->
         <div id="comp-grid-box" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5 items-stretch">
           
-          <!-- Главный кадр -->
           <div id="comp-main-photo" class="md:col-span-5 aspect-[3/4] max-h-[480px] md:max-h-[140mm] overflow-hidden rounded bg-black">
             <img src="IMG_8513.JPG" alt="Headshot" class="w-full h-full object-cover object-top md:object-center">
           </div>
 
-          <!-- Правая колонка -->
           <div id="comp-side-content" class="md:col-span-7 flex flex-col justify-between h-full gap-4">
             
-            <!-- 3 фото в ряд -->
             <div id="comp-side-photos" class="grid grid-cols-3 gap-2 md:gap-3">
               <div class="aspect-[3/4] max-h-[140px] md:max-h-[85mm] bg-neutral-900 rounded overflow-hidden">
                 <img src="IMG_6151.JPG" alt="Test" class="w-full h-full object-cover">
@@ -443,7 +436,6 @@
               </div>
             </div>
 
-            <!-- Сетка параметров: 3 колонки на телефонах, 6 колонок на больших экранах -->
             <div id="comp-params-box" class="bg-black/40 border border-white/10 p-3 rounded grid grid-cols-3 sm:grid-cols-6 gap-3 text-center text-xs tracking-wider uppercase">
               <div>
                 <span class="block text-neutral-400 text-[9px] mb-0.5">Рост</span>
@@ -507,8 +499,9 @@
         </div>
       </div>
 
+      <!-- Форма прямой заявки -->
       <div>
-        <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 block mb-3">Прямой запрос таланту</span>
+        <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 block mb-3">Прямой запрос</span>
         <form id="google-sheet-form" class="space-y-4 text-xs uppercase tracking-wider">
           <input type="text" id="form-trap" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -534,7 +527,7 @@
   </section>
 
   <footer class="py-8 text-center text-xs text-neutral-600 border-t border-white/5 uppercase tracking-widest">
-    © 2026 Артем Балашов. Independent Talent in partnership with Oscar Models.
+    © 2026 Артём Балашов. Independent Talent in partnership with Oscar Models.
   </footer>
 
   <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out" onclick="closeLightbox()">
