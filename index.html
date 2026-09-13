@@ -685,7 +685,7 @@
           body: JSON.stringify(payload)
         });
 
-        status.innerText = 'Спасибо! Ваше предложение записано в таблицу.';
+        status.innerText = 'Спасибо! Ваше предложение отправлено.';
         status.className = 'text-center py-2 text-xs tracking-wider text-emerald-400 block';
         document.getElementById('google-sheet-form').reset();
       } catch (err) {
