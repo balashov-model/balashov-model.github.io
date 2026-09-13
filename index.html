@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Артем Балашов | Model Portfolio & Composite Card</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Артем Балашов | Model & Event Talent">
+  <meta property="og:description" content="Портфолио, композит-карта, параметры и прямое бронирование.">
+  <meta property="og:image" content="IMG_8513.JPG">
+
+  <link rel="preload" as="image" href="IMG_8513.JPG">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0b0b;
+      color: #f3f4f6;
+    }
+    .serif-title {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .gallery-img {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    }
+    .gallery-card:hover .gallery-img {
+      transform: scale(1.03);
+      filter: brightness(0.9);
+    }
+
+    #lightbox {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    #lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    #lightbox-img {
+      transform: scale(0.94) translateY(12px);
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.35s ease-out;
+      will-change: transform, opacity;
+    }
+
+    #lightbox.is-open #lightbox-img {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
+        overflow: hidden !important;
+      }
+
+      nav, header, section, footer, #lightbox {
+        display: none !important;
+      }
+
+      #compcard {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+      }
+
+      #compcard .max-w-5xl {
+        max-width: 100% !important;
+        margin: 0 !important;
+      }
+
+      #compcard > div > div:first-child {
+        display: none !important;
+      }
+
+      #comp-card-print {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        max-height: 210mm !important;
+        margin: 0 !important;
+        padding: 12mm 15mm !important;
+        background: #ffffff !important;
+        color: #111111 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      /* Принудительная 12-колоночная раскладка при печати на лист */
+      #comp-grid-box {
+        display: grid !important;
+        grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+        gap: 1.25rem !important;
+      }
+
+      #comp-main-photo {
+        grid-column: span 5 / span 5 !important;
+        max-height: 140mm !important;
+      }
+
+      #comp-side-content {
+        grid-column: span 7 / span 7 !important;
+      }
+
+      #comp-side-photos .aspect-\[3\/4\] {
+        max-height: 85mm !important;
+      }
+
+      #comp-params-box {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+      }
+
+      #comp-card-print * {
+        color: #111111 !important;
+        border-color: #e5e7eb !important;
+      }
+
+      #comp-card-print .text-white {
+        color: #000000 !important;
+      }
+
+      #comp-card-print .text-neutral-400,
+      #comp-card-print .text-neutral-500 {
+        color: #6b7280 !important;
+      }
+
+      #comp-card-print .bg-black,
+      #comp-card-print .bg-neutral-900,
+      #comp-card-print .bg-black\/40 {
+        background-color: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+  <!-- Навигация: аккуратный короткий бейдж OSCAR MODELS -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-black/85 backdrop-blur-md border-b border-white/10 px-4 md:px-6 py-3.5 flex justify-between items-center text-xs tracking-widest uppercase">
+    <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2">
+      <span>АРТЕМ БАЛАШОВ</span>
+      <span class="text-[9px] md:text-[10px] bg-white/10 text-neutral-300 px-1.5 py-0.5 rounded tracking-normal">OSCAR MODELS</span>
+    </a>
+    <div class="flex gap-4 md:gap-6 text-[11px] md:text-xs">
+      <a href="#book" class="hover:text-neutral-400 transition hidden sm:inline">Portfolio</a>
+      <a href="#video" class="hover:text-neutral-400 transition">Video</a>
+      <a href="#compcard" class="hover:text-neutral-400 transition">Comp Card</a>
+      <a href="#contact" class="hover:text-neutral-400 transition">Booking</a>
+    </div>
+  </nav>
+
+  <!-- Hero-секция -->
+  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-28 pb-16 bg-[#0b0b0b]">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      
+      <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-xs uppercase tracking-[0.25em] text-neutral-400">Model & Event Talent</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span class="text-xs uppercase tracking-widest text-emerald-400 font-medium">Available for Direct Booking</span>
+        </div>
+
+        <h1 class="serif-title text-5xl sm:text-6xl md:text-8xl font-light tracking-wide leading-none mb-6">
+          АРТЕМ БАЛАШОВ
+        </h1>
+
+        <p class="text-sm md:text-base text-neutral-300 max-w-lg mb-8 font-light leading-relaxed">
+          22 года. Модель коммерческих направлений, лукбуков, деловых ивентов и стендовых проектов. В сотрудничестве с <strong>Oscar Models Management</strong>. Официальное оформление (самозанятость).
+        </p>
+
+        <div class="flex flex-wrap gap-4 text-xs tracking-widest uppercase">
+          <a href="#book" class="bg-white text-black px-7 py-3.5 font-medium hover:bg-neutral-200 transition text-center">Смотреть Бук</a>
+          <a href="#compcard" class="border border-white/40 px-7 py-3.5 hover:bg-white/10 transition text-center">Composite Card (PDF)</a>
+          <a href="#video" class="border border-white/20 px-7 py-3.5 text-neutral-300 hover:text-white hover:border-white transition text-center">Видеовизитка</a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
+        <div class="relative w-full max-w-sm sm:max-w-md lg:max-w-none aspect-[3/4] max-h-[75vh] overflow-hidden rounded-xl border border-white/15 bg-neutral-900 shadow-2xl">
+          <img src="IMG_8513.JPG" 
+               onerror="this.src='https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1920&q=80'" 
+               alt="Artem Balashov Portrait" 
+               class="w-full h-full object-cover object-center filter contrast-105"
+               decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Параметры (Measurements) -->
+  <section class="py-16 px-6 md:px-16 border-b border-white/10 bg-[#111]">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Specs & Details</span>
+          <h2 class="serif-title text-3xl md:text-4xl font-normal mt-1">Параметры модели</h2>
+        </div>
+        <div class="text-xs text-neutral-400 tracking-wider uppercase mt-3 md:mt-0">
+          Partner Agency: <span class="text-white font-medium">Oscar Models</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 text-center border-t border-b border-white/10 py-8">
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Возраст</span>
+          <span class="text-2xl font-light">22</span>
+        </div>
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Рост</span>
+          <span class="text-2xl font-light">175 см</span>
+        </div>
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Размер одежды</span>
+          <span class="text-2xl font-light">M (48)</span>
+        </div>
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Глаза</span>
+          <span class="text-2xl font-light">Карие</span>
+        </div>
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Волосы</span>
+          <span class="text-2xl font-light">Темно-русые</span>
+        </div>
+        <div>
+          <span class="block text-neutral-500 text-xs uppercase tracking-wider mb-1">Локация</span>
+          <span class="text-2xl font-light">Москва</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Галерея (Book & Events) -->
+  <section id="book" class="py-24 px-6 md:px-16">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Selected Portfolio</span>
+          <h2 class="serif-title text-4xl md:text-5xl font-light">Book & Events</h2>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs tracking-wider uppercase">
+          <button onclick="filterGallery('all', this)" class="filter-btn active border border-white px-4 py-2 bg-white text-black transition">Все</button>
+          <button onclick="filterGallery('editorial', this)" class="filter-btn border border-white/20 px-4 py-2 hover:border-white transition">Model Tests / Studio</button>
+          <button onclick="filterGallery('commercial', this)" class="filter-btn border border-white/20 px-4 py-2 hover:border-white transition">Commercial & Style</button>
+          <button onclick="filterGallery('events', this)" class="filter-btn border border-white/20 px-4 py-2 hover:border-white transition">Events & Forums</button>
+        </div>
+      </div>
+
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="editorial" onclick="openLightbox(this)">
+          <img src="IMG_8513.JPG" alt="Портрет анфас" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Studio Headshot</span>
+            <span class="text-sm font-medium">Главный портрет</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="editorial" onclick="openLightbox(this)">
+          <img src="IMG_6151.JPG" alt="Editorial Look" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Model Test</span>
+            <span class="text-sm font-medium">Студийный кадр / Очки</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="commercial" onclick="openLightbox(this)">
+          <img src="IMG_6152.JPG" alt="Lifestyle Shoot" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Commercial Lifestyle</span>
+            <span class="text-sm font-medium">Каталожный образ</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="commercial" onclick="openLightbox(this)">
+          <img src="IMG_8506.JPG" alt="Classic Suit Look" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Formal / Black Tie</span>
+            <span class="text-sm font-medium">Классический костюм</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="events" onclick="openLightbox(this)">
+          <img src="IMG_8509.JPG" alt="Форум ВДНХ Россия" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Exhibition</span>
+            <span class="text-sm font-medium">Форум «Россия» ВДНХ</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="events" onclick="openLightbox(this)">
+          <img src="IMG_8511.JPG" alt="Стенд BetBoom" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Promo Campaign</span>
+            <span class="text-sm font-medium">Стендист BetBoom</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="events" onclick="openLightbox(this)">
+          <img src="IMG_8507.JPG" alt="Glory Fest" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Event Host</span>
+            <span class="text-sm font-medium">Glory Fest Технобунт</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="events" onclick="openLightbox(this)">
+          <img src="IMG_8510.JPG" alt="Индустриальный парк Руднево" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Industrial Forum</span>
+            <span class="text-sm font-medium">Площадка «Руднево»</span>
+          </div>
+        </div>
+
+        <div class="gallery-card relative overflow-hidden bg-neutral-900 group cursor-pointer aspect-[3/4]" data-cat="events" onclick="openLightbox(this)">
+          <img src="IMG_5835.JPG" alt="Работа с микрофоном" class="gallery-img w-full h-full object-cover" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end">
+            <span class="text-xs uppercase tracking-widest text-neutral-300">Stage / Speaker Support</span>
+            <span class="text-sm font-medium">Работа со сценой</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Видеовизитка -->
+  <section id="video" class="py-24 px-6 md:px-16 border-t border-b border-white/10 bg-[#0d0d0d]">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Introduction</span>
+      <h2 class="serif-title text-4xl md:text-5xl font-light mb-4">Видеовизитка</h2>
+      <p class="text-sm text-neutral-400 font-light mb-8 max-w-lg mx-auto">
+        Короткая презентация модели (подача, профили, пластика, голос).
+      </p>
+
+      <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black aspect-video max-w-3xl mx-auto shadow-2xl">
+        <video controls preload="none" poster="IMG_8513.JPG" class="w-full h-full object-cover">
+          <source src="5946897207271934775.mp4" type="video/mp4">
+          Ваш браузер не поддерживает встроенное видео.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- Composite Card (Полная мобильная адаптация) -->
+  <section id="compcard" class="py-24 px-4 md:px-16 bg-[#111]">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Official Card</span>
+          <h2 class="serif-title text-3xl md:text-4xl font-light mt-1">Composite Card</h2>
+        </div>
+        <button onclick="window.print()" class="bg-white text-black px-6 py-3 text-xs tracking-widest uppercase font-semibold hover:bg-neutral-200 transition flex items-center justify-center gap-2">
+          <span>Печать / Сохранить в PDF</span>
+        </button>
+      </div>
+
+      <!-- Сама карточка -->
+      <div id="comp-card-print" class="bg-[#181818] border border-white/15 p-5 md:p-8 rounded-lg shadow-2xl text-neutral-200">
+        
+        <!-- Шапка -->
+        <div class="flex justify-between items-end border-b border-white/15 pb-3 mb-4">
+          <div>
+            <h3 class="serif-title text-2xl md:text-4xl font-normal tracking-wider text-white">АРТЕМ БАЛАШОВ</h3>
+            <span class="text-[10px] md:text-xs tracking-[0.2em] uppercase text-neutral-400">Model & Event Talent</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-400 block">Agency Partner</span>
+            <span class="text-xs md:text-sm tracking-widest uppercase font-semibold text-white">OSCAR MODELS</span>
+            <span class="block text-[10px] md:text-[11px] text-neutral-400">oscar-models.ru</span>
+          </div>
+        </div>
+
+        <!-- Адаптивная сетка: на мобилках в 1 колонку, на планшетах/ПК в 12 колонок -->
+        <div id="comp-grid-box" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5 items-stretch">
+          
+          <!-- Главный кадр -->
+          <div id="comp-main-photo" class="md:col-span-5 aspect-[3/4] max-h-[480px] md:max-h-[140mm] overflow-hidden rounded bg-black">
+            <img src="IMG_8513.JPG" alt="Headshot" class="w-full h-full object-cover object-top md:object-center">
+          </div>
+
+          <!-- Правая колонка -->
+          <div id="comp-side-content" class="md:col-span-7 flex flex-col justify-between h-full gap-4">
+            
+            <!-- 3 фото в ряд -->
+            <div id="comp-side-photos" class="grid grid-cols-3 gap-2 md:gap-3">
+              <div class="aspect-[3/4] max-h-[140px] md:max-h-[85mm] bg-neutral-900 rounded overflow-hidden">
+                <img src="IMG_6151.JPG" alt="Test" class="w-full h-full object-cover">
+              </div>
+              <div class="aspect-[3/4] max-h-[140px] md:max-h-[85mm] bg-neutral-900 rounded overflow-hidden">
+                <img src="IMG_6152.JPG" alt="Lifestyle" class="w-full h-full object-cover">
+              </div>
+              <div class="aspect-[3/4] max-h-[140px] md:max-h-[85mm] bg-neutral-900 rounded overflow-hidden">
+                <img src="IMG_8506.JPG" alt="Suit" class="w-full h-full object-cover">
+              </div>
+            </div>
+
+            <!-- Сетка параметров: 3 колонки на телефонах, 6 колонок на больших экранах -->
+            <div id="comp-params-box" class="bg-black/40 border border-white/10 p-3 rounded grid grid-cols-3 sm:grid-cols-6 gap-3 text-center text-xs tracking-wider uppercase">
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Рост</span>
+                <span class="font-semibold text-white text-xs">175 см</span>
+              </div>
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Размер</span>
+                <span class="font-semibold text-white text-xs">M (48)</span>
+              </div>
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Возраст</span>
+                <span class="font-semibold text-white text-xs">22 года</span>
+              </div>
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Глаза</span>
+                <span class="font-semibold text-white text-xs">Карие</span>
+              </div>
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Волосы</span>
+                <span class="font-semibold text-white text-xs">Темно-русые</span>
+              </div>
+              <div>
+                <span class="block text-neutral-400 text-[9px] mb-0.5">Город</span>
+                <span class="font-semibold text-white text-xs">Москва</span>
+              </div>
+            </div>
+
+            <div class="text-[10px] md:text-[11px] text-neutral-400 flex flex-col sm:flex-row justify-between pt-1 border-t border-white/10 gap-1">
+              <span>Booking: promo@oscar-models.ru</span>
+              <span>Direct: +7 (977) 273-65-48</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты & Букинг -->
+  <section id="contact" class="py-24 px-6 md:px-16 border-t border-white/10 bg-[#090909]">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div>
+        <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Booking & Inquiries</span>
+        <h2 class="serif-title text-4xl font-light mt-1 mb-6">Сотрудничество</h2>
+        <p class="text-sm text-neutral-400 font-light leading-relaxed mb-6">
+          Открыт к коммерческим съемкам, лукбукам, выставочным ивентам и корпоративным проектам. Возможен как прямой договор (самозанятость, чек/акт), так и работа через партнёрское агентство.
+        </p>
+        <div class="space-y-4 text-xs tracking-wider uppercase text-neutral-300">
+          <div class="border-b border-white/10 pb-2">
+            <span class="text-neutral-500 block text-[10px]">Прямой контакт:</span>
+            <span class="text-white font-medium">+7 (977) 273-65-48 (Telegram / WhatsApp)</span>
+          </div>
+          <div class="border-b border-white/10 pb-2">
+            <span class="text-neutral-500 block text-[10px]">Партнёрское агентство:</span>
+            <span class="text-white font-medium">Oscar Model Management</span>
+            <a href="https://oscar-models.ru" target="_blank" class="block text-neutral-400 hover:text-white transition mt-0.5">oscar-models.ru</a>
+          </div>
+          <div class="border-b border-white/10 pb-2">
+            <span class="text-neutral-500 block text-[10px]">Формат работы:</span>
+            <span class="text-neutral-300">Прямой найм / Самозанятость (НПД)</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 block mb-3">Прямой запрос таланту</span>
+        <form id="google-sheet-form" class="space-y-4 text-xs uppercase tracking-wider">
+          <input type="text" id="form-trap" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div>
+            <label class="block text-neutral-500 mb-2">Компания / Бренд</label>
+            <input type="text" id="form-company" required placeholder="Например: Сбер / Бренд одежды" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
+          </div>
+          <div>
+            <label class="block text-neutral-500 mb-2">Контакты (Email или Telegram)</label>
+            <input type="text" id="form-contact" required placeholder="@telegram или почта" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
+          </div>
+          <div>
+            <label class="block text-neutral-500 mb-2">Формат работы и даты</label>
+            <textarea id="form-details" rows="3" required placeholder="Съемка каталога, стенд на форуме, выставка..." class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition"></textarea>
+          </div>
+          <button type="submit" id="sheet-btn" class="w-full bg-white text-black py-4 font-semibold hover:bg-neutral-200 transition">
+            Отправить прямое предложение
+          </button>
+          <div id="sheet-status" class="hidden text-center py-2 text-xs tracking-wider"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-xs text-neutral-600 border-t border-white/5 uppercase tracking-widest">
+    © 2026 Артем Балашов. Independent Talent in partnership with Oscar Models.
+  </footer>
+
+  <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white text-xs tracking-widest uppercase font-light border border-white/20 bg-black/50 backdrop-blur-md px-4 py-2 hover:bg-white/20 transition cursor-pointer" onclick="closeLightbox()">✕ Закрыть</button>
+    <div class="relative max-h-[90vh] max-w-[92vw] flex items-center justify-center" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Fullscreen preview" class="max-h-[88vh] max-w-[90vw] object-contain rounded shadow-2xl cursor-default">
+    </div>
+  </div>
+
+  <script>
+    function filterGallery(category, triggerBtn) {
+      const cards = document.querySelectorAll('.gallery-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-white', 'text-black');
+        btn.classList.add('border-white/20');
+      });
+
+      const activeBtn = triggerBtn || window.event?.target;
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-black');
+        activeBtn.classList.remove('border-white/20');
+      }
+
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-cat') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    function openLightbox(card) {
+      const img = card.querySelector('img');
+      if (!img) return;
+
+      lightboxImg.src = img.src;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('contextmenu', (e) => {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+      }
+    });
+
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3_Qt7y0yBLgOpEtA_KjWokcgmmYtt3jNb4Slv4tWpgkhDdg4wDpj182FsH41nnK3S/exec';
+
+    document.getElementById('google-sheet-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (document.getElementById('form-trap').value !== '') {
+        return;
+      }
+      
+      const btn = document.getElementById('sheet-btn');
+      const status = document.getElementById('sheet-status');
+      const company = document.getElementById('form-company').value.trim();
+      const contact = document.getElementById('form-contact').value.trim();
+      const details = document.getElementById('form-details').value.trim();
+
+      btn.disabled = true;
+      btn.innerText = 'Отправка...';
+
+      const payload = {
+        company: company,
+        contact: contact,
+        details: details
+      };
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        status.innerText = 'Спасибо! Ваше предложение записано в таблицу.';
+        status.className = 'text-center py-2 text-xs tracking-wider text-emerald-400 block';
+        document.getElementById('google-sheet-form').reset();
+      } catch (err) {
+        status.innerText = 'Ошибка отправки. Пожалуйста, напишите напрямую в Telegram или на почту.';
+        status.className = 'text-center py-2 text-xs tracking-wider text-red-400 block';
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Отправить прямое предложение';
+      }
+    });
+  </script>
+</body>
+</html>
