@@ -42,14 +42,16 @@
       filter: brightness(0.9);
     }
 
+    /* Лайтбокс */
     #lightbox {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                  visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+      touch-action: none; /* Запрет жестов браузера на мобилках */
     }
 
     #lightbox.is-open {
@@ -61,8 +63,8 @@
     #lightbox-img {
       transform: scale(0.94) translateY(12px);
       opacity: 0;
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.35s ease-out;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.25s ease-out;
       will-change: transform, opacity;
     }
 
@@ -71,6 +73,7 @@
       opacity: 1;
     }
 
+    /* Печать композитки на лист А4 Landscape */
     @page {
       size: A4 landscape;
       margin: 0;
@@ -180,7 +183,7 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Выверенная шапка: идеальная центровка на мобильных телефонах -->
+  <!-- Навигация: идеально отцентрована на мобильных -->
   <nav class="fixed top-0 left-0 w-full z-40 bg-black/85 backdrop-blur-md border-b border-white/10 px-4 md:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 uppercase tracking-widest text-xs">
     <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2 justify-center">
       <span>АРТЁМ БАЛАШОВ</span>
@@ -371,7 +374,7 @@
     </div>
   </section>
 
-  <!-- Видеовизитка: добавлены playsinline, preload="metadata" и прямая ссылка -->
+  <!-- Видеовизитка с аварийной ссылкой и прямой привязкой src -->
   <section id="video" class="py-24 px-6 md:px-16 border-t border-b border-white/10 bg-[#0d0d0d]">
     <div class="max-w-4xl mx-auto text-center">
       <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Introduction</span>
@@ -381,10 +384,24 @@
       </p>
 
       <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black aspect-video max-w-3xl mx-auto shadow-2xl">
-        <video controls playsinline webkit-playsinline preload="metadata" poster="IMG_8513.JPG" class="w-full h-full object-cover">
+        <video id="model-video" 
+               controls 
+               playsinline 
+               webkit-playsinline 
+               preload="auto" 
+               poster="IMG_8513.JPG" 
+               src="./5946897207271934775.mp4" 
+               class="w-full h-full object-cover">
           <source src="./5946897207271934775.mp4" type="video/mp4">
-          Ваш браузер не поддерживает встроенное видео.
+          Ваш браузер не поддерживает прямое видео.
         </video>
+      </div>
+
+      <!-- Запасная кнопка прямого просмотра видео на случай сбоев мобильного плеера -->
+      <div class="mt-4">
+        <a href="./5946897207271934775.mp4" target="_blank" class="text-[11px] uppercase tracking-widest text-neutral-400 hover:text-white underline transition">
+          Открыть видео в отдельной вкладке
+        </a>
       </div>
     </div>
   </section>
@@ -530,8 +547,9 @@
     © 2026 Артём Балашов. Independent Talent in partnership with Oscar Models.
   </footer>
 
+  <!-- Модальное окно Lightbox -->
   <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out" onclick="closeLightbox()">
-    <button class="absolute top-6 right-6 text-white text-xs tracking-widest uppercase font-light border border-white/20 bg-black/50 backdrop-blur-md px-4 py-2 hover:bg-white/20 transition cursor-pointer" onclick="closeLightbox()">✕ Закрыть</button>
+    <button class="absolute top-6 right-6 text-white text-xs tracking-widest uppercase font-light border border-white/20 bg-black/50 backdrop-blur-md px-4 py-2 hover:bg-white/20 transition cursor-pointer z-10" onclick="closeLightbox()">✕ Закрыть</button>
     <div class="relative max-h-[90vh] max-w-[92vw] flex items-center justify-center" onclick="event.stopPropagation()">
       <img id="lightbox-img" src="" alt="Fullscreen preview" class="max-h-[88vh] max-w-[90vw] object-contain rounded shadow-2xl cursor-default">
     </div>
@@ -562,21 +580,41 @@
       });
     }
 
+    // Лайтбокс с абсолютной блокировкой скролла на iOS и Android
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
+    let scrollPos = 0;
+
+    // Глушим события тача на окне просмотра
+    lightbox.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
 
     function openLightbox(card) {
       const img = card.querySelector('img');
       if (!img) return;
 
+      scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
       lightboxImg.src = img.src;
       lightbox.classList.add('is-open');
+
+      // Жесткая фиксация body на мобильных браузерах
+      document.body.style.top = `-${scrollPos}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
       lightbox.classList.remove('is-open');
+
+      // Возврат экрана на точную позицию
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
+      window.scrollTo(0, scrollPos);
     }
 
     document.addEventListener('keydown', (e) => {
@@ -591,6 +629,7 @@
       }
     });
 
+    // Букинг форма
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3_Qt7y0yBLgOpEtA_KjWokcgmmYtt3jNb4Slv4tWpgkhDdg4wDpj182FsH41nnK3S/exec';
 
     document.getElementById('google-sheet-form').addEventListener('submit', async (e) => {
