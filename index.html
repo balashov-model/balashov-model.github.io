@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- viewport-fit=cover убирает баги встроенного браузера Telegram с чёлкой и сдвигом шапки -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Артём Балашов | Model Portfolio & Composite Card</title>
 
   <meta property="og:type" content="website">
@@ -28,6 +29,19 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
+    /* Монолитная фиксация шапки для Telegram In-App Browser и Safari */
+    #main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 50;
+      padding-top: max(0.875rem, env(safe-area-inset-top));
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
     img {
       -webkit-user-drag: none;
       user-select: none;
@@ -51,7 +65,7 @@
                   visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      touch-action: none; /* Запрет жестов браузера на мобилках */
+      touch-action: none;
     }
 
     #lightbox.is-open {
@@ -183,8 +197,8 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Навигация: идеально отцентрована на мобильных -->
-  <nav class="fixed top-0 left-0 w-full z-40 bg-black/85 backdrop-blur-md border-b border-white/10 px-4 md:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 uppercase tracking-widest text-xs">
+  <!-- Навигация: идеально зафиксирована сверху во всех браузерах -->
+  <nav id="main-nav" class="bg-black/90 backdrop-blur-md border-b border-white/10 px-4 md:px-8 pb-3.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 uppercase tracking-widest text-xs">
     <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2 justify-center">
       <span>АРТЁМ БАЛАШОВ</span>
       <span class="text-[9px] md:text-[10px] bg-white/10 text-neutral-300 px-2 py-0.5 rounded tracking-normal">OSCAR MODELS</span>
@@ -198,7 +212,7 @@
   </nav>
 
   <!-- Hero-секция -->
-  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-32 pb-16 bg-[#0b0b0b]">
+  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-36 pb-16 bg-[#0b0b0b]">
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       
       <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
@@ -374,7 +388,7 @@
     </div>
   </section>
 
-  <!-- Видеовизитка с аварийной ссылкой и прямой привязкой src -->
+  <!-- Видеовизитка -->
   <section id="video" class="py-24 px-6 md:px-16 border-t border-b border-white/10 bg-[#0d0d0d]">
     <div class="max-w-4xl mx-auto text-center">
       <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Introduction</span>
@@ -390,16 +404,15 @@
                webkit-playsinline 
                preload="auto" 
                poster="IMG_8513.JPG" 
-               src="./5946897207271934775.mp4" 
+               src="5946897207271934775.MP4" 
                class="w-full h-full object-cover">
-          <source src="./5946897207271934775.mp4" type="video/mp4">
+          <source src="5946897207271934775.MP4" type="video/mp4">
           Ваш браузер не поддерживает прямое видео.
         </video>
       </div>
 
-      <!-- Запасная кнопка прямого просмотра видео на случай сбоев мобильного плеера -->
       <div class="mt-4">
-        <a href="./5946897207271934775.mp4" target="_blank" class="text-[11px] uppercase tracking-widest text-neutral-400 hover:text-white underline transition">
+        <a href="5946897207271934775.MP4" target="_blank" class="text-[11px] uppercase tracking-widest text-neutral-400 hover:text-white underline transition">
           Открыть видео в отдельной вкладке
         </a>
       </div>
@@ -580,12 +593,11 @@
       });
     }
 
-    // Лайтбокс с абсолютной блокировкой скролла на iOS и Android
+    // Лайтбокс
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     let scrollPos = 0;
 
-    // Глушим события тача на окне просмотра
     lightbox.addEventListener('touchmove', (e) => {
       e.preventDefault();
     }, { passive: false });
@@ -599,7 +611,6 @@
       lightboxImg.src = img.src;
       lightbox.classList.add('is-open');
 
-      // Жесткая фиксация body на мобильных браузерах
       document.body.style.top = `-${scrollPos}px`;
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
@@ -609,7 +620,6 @@
     function closeLightbox() {
       lightbox.classList.remove('is-open');
 
-      // Возврат экрана на точную позицию
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
