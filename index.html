@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <!-- viewport-fit=cover убирает баги встроенного браузера Telegram с чёлкой и сдвигом шапки -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Артём Балашов | Model Portfolio & Composite Card</title>
 
@@ -29,17 +28,20 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
-    /* Монолитная фиксация шапки для Telegram In-App Browser и Safari */
     #main-nav {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      right: 0;
       width: 100%;
-      z-index: 50;
-      padding-top: max(0.875rem, env(safe-area-inset-top));
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
+      z-index: 40;
+    }
+    @media (min-width: 768px) {
+      #main-nav {
+        position: fixed;
+        background-color: rgba(11, 11, 11, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
     }
 
     img {
@@ -56,7 +58,6 @@
       filter: brightness(0.9);
     }
 
-    /* Лайтбокс */
     #lightbox {
       opacity: 0;
       visibility: hidden;
@@ -87,7 +88,6 @@
       opacity: 1;
     }
 
-    /* Печать композитки на лист А4 Landscape */
     @page {
       size: A4 landscape;
       margin: 0;
@@ -197,22 +197,20 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Навигация: идеально зафиксирована сверху во всех браузерах -->
-  <nav id="main-nav" class="bg-black/90 backdrop-blur-md border-b border-white/10 px-4 md:px-8 pb-3.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 uppercase tracking-widest text-xs">
+  <nav id="main-nav" class="border-b border-white/10 px-4 md:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0 uppercase tracking-widest text-xs bg-black/60 md:bg-transparent">
     <a href="#" class="font-semibold text-xs md:text-sm tracking-wider flex items-center gap-2 justify-center">
       <span>АРТЁМ БАЛАШОВ</span>
       <span class="text-[9px] md:text-[10px] bg-white/10 text-neutral-300 px-2 py-0.5 rounded tracking-normal">OSCAR MODELS</span>
     </a>
-    <div class="flex items-center justify-center gap-5 md:gap-6 text-[11px] md:text-xs">
-      <a href="#book" class="hover:text-neutral-400 transition hidden sm:inline">Portfolio</a>
-      <a href="#video" class="hover:text-neutral-400 transition">Video</a>
-      <a href="#compcard" class="hover:text-neutral-400 transition">Comp Card</a>
-      <a href="#contact" class="hover:text-neutral-400 transition">Booking</a>
+    <div class="flex items-center justify-center gap-5 md:gap-6 text-[11px] md:text-xs text-neutral-300">
+      <a href="#book" class="hover:text-white transition hidden sm:inline">Portfolio</a>
+      <a href="#video" class="hover:text-white transition">Video</a>
+      <a href="#compcard" class="hover:text-white transition">Comp Card</a>
+      <a href="#contact" class="hover:text-white transition">Booking</a>
     </div>
   </nav>
 
-  <!-- Hero-секция -->
-  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-36 pb-16 bg-[#0b0b0b]">
+  <header class="min-h-screen flex items-center p-6 md:p-16 relative pt-28 md:pt-32 pb-16 bg-[#0b0b0b]">
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       
       <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
@@ -251,7 +249,6 @@
     </div>
   </header>
 
-  <!-- Параметры -->
   <section class="py-16 px-6 md:px-16 border-b border-white/10 bg-[#111]">
     <div class="max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
@@ -293,7 +290,6 @@
     </div>
   </section>
 
-  <!-- Галерея -->
   <section id="book" class="py-24 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
@@ -388,7 +384,6 @@
     </div>
   </section>
 
-  <!-- Видеовизитка -->
   <section id="video" class="py-24 px-6 md:px-16 border-t border-b border-white/10 bg-[#0d0d0d]">
     <div class="max-w-4xl mx-auto text-center">
       <span class="text-xs uppercase tracking-[0.3em] text-neutral-500">Introduction</span>
@@ -419,7 +414,6 @@
     </div>
   </section>
 
-  <!-- Composite Card -->
   <section id="compcard" class="py-24 px-4 md:px-16 bg-[#111]">
     <div class="max-w-5xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
@@ -503,7 +497,6 @@
     </div>
   </section>
 
-  <!-- Контакты & Букинг -->
   <section id="contact" class="py-24 px-6 md:px-16 border-t border-white/10 bg-[#090909]">
     <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
       <div>
@@ -529,7 +522,6 @@
         </div>
       </div>
 
-      <!-- Форма прямой заявки -->
       <div>
         <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 block mb-3">Прямой запрос</span>
         <form id="google-sheet-form" class="space-y-4 text-xs uppercase tracking-wider">
@@ -560,7 +552,6 @@
     © 2026 Артём Балашов. Independent Talent in partnership with Oscar Models.
   </footer>
 
-  <!-- Модальное окно Lightbox -->
   <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out" onclick="closeLightbox()">
     <button class="absolute top-6 right-6 text-white text-xs tracking-widest uppercase font-light border border-white/20 bg-black/50 backdrop-blur-md px-4 py-2 hover:bg-white/20 transition cursor-pointer z-10" onclick="closeLightbox()">✕ Закрыть</button>
     <div class="relative max-h-[90vh] max-w-[92vw] flex items-center justify-center" onclick="event.stopPropagation()">
@@ -593,7 +584,6 @@
       });
     }
 
-    // Лайтбокс
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     let scrollPos = 0;
@@ -639,7 +629,6 @@
       }
     });
 
-    // Букинг форма
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3_Qt7y0yBLgOpEtA_KjWokcgmmYtt3jNb4Slv4tWpgkhDdg4wDpj182FsH41nnK3S/exec';
 
     document.getElementById('google-sheet-form').addEventListener('submit', async (e) => {
