@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Артём Балашов | Model Portfolio & Composite Card</title>
 
+  <!-- Фавикон: монограмма "А" с засечками, центрированная в черном квадрате -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0b0b'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='central' text-anchor='middle' font-size='64' font-family='Didot, Bodoni MT, Cormorant Garamond, Georgia, serif' fill='%23ffffff' font-weight='400'%3EА%3C/text%3E%3C/svg%3E">
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Артём Балашов | Model & Event Talent">
   <meta property="og:description" content="Портфолио, композит-карта, параметры и прямое бронирование.">
@@ -407,7 +410,7 @@
       </div>
 
       <div class="mt-4">
-        <a href="5946897207271934775.MP4" target="_blank" class="text-[11px] uppercase tracking-widest text-neutral-400 hover:text-white underline transition">
+        <a href="5946897207271934775.MP4" target="_blank" rel="noopener" class="text-[11px] uppercase tracking-widest text-neutral-400 hover:text-white underline transition">
           Открыть видео в отдельной вкладке
         </a>
       </div>
@@ -513,7 +516,7 @@
           <div class="border-b border-white/10 pb-2">
             <span class="text-neutral-500 block text-[10px]">Партнёрское агентство:</span>
             <span class="text-white font-medium">Oscar Model Management</span>
-            <a href="https://oscar-models.ru" target="_blank" class="block text-neutral-400 hover:text-white transition mt-0.5">oscar-models.ru</a>
+            <a href="https://oscar-models.ru" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-white transition mt-0.5">oscar-models.ru</a>
           </div>
           <div class="border-b border-white/10 pb-2">
             <span class="text-neutral-500 block text-[10px]">Формат работы:</span>
@@ -529,15 +532,15 @@
 
           <div>
             <label class="block text-neutral-500 mb-2">Компания / Бренд</label>
-            <input type="text" id="form-company" required placeholder="Например: Сбер / Бренд одежды" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
+            <input type="text" id="form-company" required placeholder="Например: Бренд одежды / Студия" maxlength="100" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
           </div>
           <div>
             <label class="block text-neutral-500 mb-2">Контакты (Email или Telegram)</label>
-            <input type="text" id="form-contact" required placeholder="@telegram или почта" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
+            <input type="text" id="form-contact" required placeholder="@telegram или почта" maxlength="100" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition">
           </div>
           <div>
             <label class="block text-neutral-500 mb-2">Формат работы и даты</label>
-            <textarea id="form-details" rows="3" required placeholder="Съемка каталога, стенд на форуме, выставка..." class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition"></textarea>
+            <textarea id="form-details" rows="3" required placeholder="Съемка каталога, стенд на форуме, выставка..." maxlength="500" class="w-full bg-[#141414] border border-white/15 px-4 py-3 text-white focus:outline-none focus:border-white transition"></textarea>
           </div>
           <button type="submit" id="sheet-btn" class="w-full bg-white text-black py-4 font-semibold hover:bg-neutral-200 transition">
             Отправить прямое предложение
@@ -603,6 +606,8 @@
 
       document.body.style.top = `-${scrollPos}px`;
       document.body.style.position = 'fixed';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     }
@@ -612,6 +617,8 @@
 
       document.body.style.position = '';
       document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
       window.scrollTo(0, scrollPos);
@@ -630,6 +637,11 @@
     });
 
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3_Qt7y0yBLgOpEtA_KjWokcgmmYtt3jNb4Slv4tWpgkhDdg4wDpj182FsH41nnK3S/exec';
+    let lastSubmitTime = 0;
+
+    function sanitizeInput(str) {
+      return str.replace(/[<>]/g, '').trim();
+    }
 
     document.getElementById('google-sheet-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -637,12 +649,24 @@
       if (document.getElementById('form-trap').value !== '') {
         return;
       }
+
+      const now = Date.now();
+      if (now - lastSubmitTime < 5000) {
+        return;
+      }
+      lastSubmitTime = now;
       
       const btn = document.getElementById('sheet-btn');
       const status = document.getElementById('sheet-status');
-      const company = document.getElementById('form-company').value.trim();
-      const contact = document.getElementById('form-contact').value.trim();
-      const details = document.getElementById('form-details').value.trim();
+      const company = sanitizeInput(document.getElementById('form-company').value);
+      const contact = sanitizeInput(document.getElementById('form-contact').value);
+      const details = sanitizeInput(document.getElementById('form-details').value);
+
+      if (!company || !contact || !details) {
+        status.innerText = 'Пожалуйста, заполните все поля.';
+        status.className = 'text-center py-2 text-xs tracking-wider text-red-400 block';
+        return;
+      }
 
       btn.disabled = true;
       btn.innerText = 'Отправка...';
@@ -667,7 +691,7 @@
         status.className = 'text-center py-2 text-xs tracking-wider text-emerald-400 block';
         document.getElementById('google-sheet-form').reset();
       } catch (err) {
-        status.innerText = 'Ошибка отправки. Пожалуйста, напишите напрямую в Telegram или на почту.';
+        status.innerText = 'Ошибка отправки. Напишите напрямую в Telegram или на почту.';
         status.className = 'text-center py-2 text-xs tracking-wider text-red-400 block';
       } finally {
         btn.disabled = false;
